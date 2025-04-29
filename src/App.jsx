@@ -9,10 +9,15 @@ export default function App() {
 
   const [showAddForm, setShowAddForm] = useState(false);
 
+  const deleteTask = (id) => {
+    setTasks(tasks.filter(task => task.id !== id));
+  };
+  
+
   return (
     <>
       <Header setShowAddForm={setShowAddForm} />
-      <TaskList tasks={tasks} />
+      <TaskList tasks={tasks} deleteTask={deleteTask}/>
       {showAddForm && (
         <AddTaskForm setShowAddForm={setShowAddForm} setTasks={setTasks} />
       )}
