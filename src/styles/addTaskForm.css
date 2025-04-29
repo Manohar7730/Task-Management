@@ -1,0 +1,59 @@
+#add-task-form {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.4);
+    z-index: 999; /* So it overlays everything */
+  }
+  
+  .task-form {
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background-color: #f9e9d9;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .task-form label {
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  
+  .taskInput {
+    border: 1px solid #ccc;
+    padding: 0.6em 1em;
+    border-radius: 20px;
+    width: 100%;
+    font-size: 14px;
+    outline: none;
+  }
+  
+  textarea.taskInput {
+    resize: none;
+    height: 80px;
+  }
+  
+  .task-submit {
+    border: none;
+    height: 2.5em;
+    padding: 0 20px;
+    border-radius: 20px;
+    background-color: skyblue;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .task-submit:hover {
+    background-color: deepskyblue;
+    font-weight: 600;
+  }
+  
