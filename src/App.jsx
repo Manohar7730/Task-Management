@@ -14,6 +14,10 @@ export default function App() {
   };
 
   const [editingTask, setEditingTask] = useState(null);
+  const moveTaskToCategory = (id, newCategory) => {
+    setTasks(tasks.map(task => task.id === id ? { ...task, category: newCategory } : task));
+  };
+  
 
   return (
     <>
@@ -22,6 +26,7 @@ export default function App() {
         tasks={tasks}
         deleteTask={deleteTask}
         onEditClick={setEditingTask}
+        moveTaskToCategory={moveTaskToCategory}
       />
 
       {(showAddForm || editingTask) && (

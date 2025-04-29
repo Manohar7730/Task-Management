@@ -1,7 +1,6 @@
-#task-list {
+/* General Styles for Larger Screens */
+#task-list{
   padding-top: 70px;
-  display: flex;
-  justify-content: center;
 }
 
 #tasks-table {
@@ -83,4 +82,59 @@ thead th, tbody td {
 .task-modify:hover img {
   transform: scale(1.2);
   transition: transform 0.2s;
+}
+
+/* Responsive Design for Mobile Screens */
+@media (max-width: 768px) {
+  #tasks-table {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .task-items {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  thead {
+    display: none; 
+  }
+
+  .task-item {
+    padding: 15px;
+    margin: 10px 0;
+  }
+
+  .task-column {
+    padding-left: 10px;
+  }
+
+  .buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .task-modify {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .task-item {
+    font-size: 14px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .description {
+    font-size: 12px;
+  }
+
+  .task-modify img {
+    width: 12px;
+    height: 12px;
+  }
 }
