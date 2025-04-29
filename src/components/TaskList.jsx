@@ -3,7 +3,7 @@ import "../styles/tasklist.css";
 import editIcon from "../assets/edit.png";
 import trashIcon from "../assets/trash.png";
 
-export default function TaskList({ tasks,deleteTask }) {
+export default function TaskList({ tasks,deleteTask,onEditClick }) {
   const categories = ["Pending", "In Progress", "Completed"];
 
   return (
@@ -28,9 +28,10 @@ export default function TaskList({ tasks,deleteTask }) {
                         <h4 className="title">{task.title}</h4>
                         <p className="description">{task.description}</p>
                         <div className="buttons">
-                          <button className="task-modify">
-                            <img src={editIcon} alt="edit icon" />
-                          </button>
+                        <button className="task-modify" onClick={() => onEditClick(task)}>
+  <img src={editIcon} alt="edit icon" />
+</button>
+
                           <button className="task-modify" onClick={() => deleteTask(task.id)}>
                           <img src={trashIcon} alt="delete icon" />
                           </button>

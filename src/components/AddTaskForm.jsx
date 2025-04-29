@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import "../styles/addTaskForm.css";
 
-export default function AddTaskForm({ setTasks, setShowAddForm }) {
-  const [task, setTask] = useState({
+export default function AddTaskForm({ setTasks, setShowAddForm, editingTask, setEditingTask }) {
+    const [task, setTask] = useState(
+        editingTask || {
     title: "",
     description: "",
     category: "",
@@ -29,12 +30,16 @@ export default function AddTaskForm({ setTasks, setShowAddForm }) {
       return;
     }
 
-    const newTask = {
-      ...task,
-      id: Date.now(),
-    };
-
-    setTasks((prev) => [...prev, newTask]);
+    if (editingTask) {
+        const updatedTasks = (prev) =>
+          prev.map((t) => (t.id === editingTask.id ? { ...task, id: editingTask.id } : t));
+        setTasks(updatedTasks);
+        setEditingTask(null); 
+      } else {
+        const newTask = { ...task, id: Date.now() };
+        setTasks((prev) => [...prev, newTask]);
+      }
+    
     setTask({ title: "", description: "", category: "" });
     setShowAddForm(false);
   };
@@ -79,7 +84,7 @@ export default function AddTaskForm({ setTasks, setShowAddForm }) {
         </select>
 
         <button type="submit" className="task-submit">
-          Add Task
+         {editingTask ? "update" : "Add Task"}
         </button>
         <button
           type="button"
