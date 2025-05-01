@@ -1,14 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/addTaskForm.css";
-import {createTask} from "../utils/storage";
+import { createTask } from "../utils/storage";
 
-export default function AddTaskForm({ setTasks, setShowAddForm, editingTask, setEditingTask }) {
-    const [task, setTask] = useState(
-        editingTask || {
-    title: "",
-    description: "",
-    category: "",
-  });
+export default function AddTaskForm({
+  setTasks,
+  setShowAddForm,
+  editingTask,
+  setEditingTask,
+  updateTask,
+}) {
+  const [task, setTask] = useState(
+    editingTask || {
+      title: "",
+      description: "",
+      category: "",
+    }
+  );
+
+  useEffect(() => {
+    if (editingTask) {
+      setTask({ ...editingTask });
+    }
+  }, [editingTask]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,21 +45,19 @@ export default function AddTaskForm({ setTasks, setShowAddForm, editingTask, set
     }
 
     if (editingTask) {
-        const updatedTasks = (prev) =>
-          prev.map((t) => (t.id === editingTask.id ? { ...task, id: editingTask.id } : t));
-        setTasks(updatedTasks);
-        setEditingTask(null); 
-      } else {
-        try {
-          const newTask = await createTask(task); 
-          setTasks((prev) => [...prev, newTask]);
-        } catch (error) {
-          console.error("Error creating task:", error);
-        }
+      await updateTask({ ...task, _id: editingTask._id });
+    } else {
+      try {
+        const newTask = await createTask(task);
+        setTasks((prev) => [...prev, newTask]);
+      } catch (error) {
+        console.error("Error creating task:", error);
       }
-    
+    }
+
     setTask({ title: "", description: "", category: "" });
     setShowAddForm(false);
+    setEditingTask(null);
   };
 
   return (
@@ -89,7 +100,7 @@ export default function AddTaskForm({ setTasks, setShowAddForm, editingTask, set
         </select>
 
         <button type="submit" className="task-submit">
-         {editingTask ? "update" : "Add Task"}
+          {editingTask ? "update" : "Add Task"}
         </button>
         <button
           type="button"
