@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/addTaskForm.css";
+import {createTask} from "../utils/storage";
 
 export default function AddTaskForm({ setTasks, setShowAddForm, editingTask, setEditingTask }) {
     const [task, setTask] = useState(
@@ -17,7 +18,7 @@ export default function AddTaskForm({ setTasks, setShowAddForm, editingTask, set
     }));
   };
 
-  const addTask = (e) => {
+  const addTask = async (e) => {
     e.preventDefault();
 
     if (
@@ -36,8 +37,12 @@ export default function AddTaskForm({ setTasks, setShowAddForm, editingTask, set
         setTasks(updatedTasks);
         setEditingTask(null); 
       } else {
-        const newTask = { ...task, id: Date.now() };
-        setTasks((prev) => [...prev, newTask]);
+        try {
+          const newTask = await createTask(task); 
+          setTasks((prev) => [...prev, newTask]);
+        } catch (error) {
+          console.error("Error creating task:", error);
+        }
       }
     
     setTask({ title: "", description: "", category: "" });
@@ -78,9 +83,9 @@ export default function AddTaskForm({ setTasks, setShowAddForm, editingTask, set
           className="taskInput"
         >
           <option value="select">Select Category</option>
-          <option value="Pending">Pending</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Completed">Completed</option>
+          <option value="pending">Pending</option>
+          <option value="in-progress">In Progress</option>
+          <option value="completed">Completed</option>
         </select>
 
         <button type="submit" className="task-submit">
