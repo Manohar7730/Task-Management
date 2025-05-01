@@ -23,9 +23,14 @@ export default function App() {
 
   const [showAddForm, setShowAddForm] = useState(false);
 
-  const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
-    };
+  const deleteTask = async (id) => {
+    try {
+      await deleteTaskFromAPI(id);
+      setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id)); 
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
+  };
 
   const [editingTask, setEditingTask] = useState(null);
   const moveTaskToCategory = (id, newCategory) => {
