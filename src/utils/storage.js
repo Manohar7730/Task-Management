@@ -29,11 +29,11 @@ export const updateTask = async (id, updates) => {
 };
 
 // UPDATE task status
-export const updateTaskStatus = async (id, status) => {
-  const response = await fetch(`${API_BASE_URL}/update-status/${id}`, {
+export const updateTaskCategory = async (id, newCategory) => {
+  const response = await fetch(`${API_BASE_URL}/update-category/${id}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ status }),
+    body: JSON.stringify({ category: newCategory }),
   });
   const data = await response.json();
   return data.data;

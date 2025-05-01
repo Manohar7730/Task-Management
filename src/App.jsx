@@ -7,6 +7,7 @@ import {
   getTasks,
   deleteTask as deleteTaskFromAPI,
   updateTask as updateTaskInAPI,
+  updateTaskCategory as updateTaskCategoryInAPI
 } from "./utils/storage";
 
 export default function App() {
@@ -40,10 +41,10 @@ export default function App() {
 
   const updateTask = async (updatedTask) => {
     try {
-      const task = await updateTaskInAPI(updatedTask._id, updatedTask); // Update the task on the backend
+      const task = await updateTaskInAPI(updatedTask._id, updatedTask); 
       setTasks(
         (prevTasks) =>
-          prevTasks.map((t) => (t._id === task._id ? { ...task } : t)) // Update task in state
+          prevTasks.map((t) => (t._id === task._id ? { ...task } : t)) 
       );
       setEditingTask(null);
     } catch (error) {
@@ -51,12 +52,17 @@ export default function App() {
     }
   };
 
-  const moveTaskToCategory = (id, newCategory) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, category: newCategory } : task
-      )
-    );
+  const moveTaskToCategory = async (id, newCategory) => {
+    try {
+      const updatedTask = await updateTaskCategoryInAPI(id, newCategory);
+      setTasks(
+        tasks.map((task) =>
+          task._id === updatedTask._id ? { ...updatedTask } : task
+        )
+      );
+    } catch (error) {
+      console.error("Error updating task category:", error);
+    }
   };
 
   return (
